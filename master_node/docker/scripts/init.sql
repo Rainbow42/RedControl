@@ -1,0 +1,3 @@
+CREATE DATABASE redcontrol;
+CREATE SCHEMA IF NOT EXISTS public;
+ALTER USER redcontrol WITH PASSWORD 'password';
