@@ -1,0 +1,43 @@
+name: RedControl
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - bzip2=1.0.8=h620ffc9_4
+  - ca-certificates=2022.4.26=hca03da5_0
+  - certifi=2021.10.8=py310hca03da5_2
+  - libcxx=14.0.3=h6a5c8ee_0
+  - libffi=3.4.2=hc377ac9_2
+  - libzlib=1.2.11=h90dfc92_1014
+  - ncurses=6.3=h1a28f6b_2
+  - openssl=1.1.1o=ha287fd2_0
+  - pip=22.0.4=pyhd8ed1ab_0
+  - python=3.10.4=hbdb9e5c_0
+  - readline=8.1.2=h1a28f6b_1
+  - setuptools=61.2.0=py310hca03da5_0
+  - sqlite=3.38.4=h40dfcc0_0
+  - tk=8.6.12=he1e0b03_0
+  - tzdata=2022a=hda174b7_0
+  - wheel=0.37.1=pyhd3eb1b0_0
+  - xz=5.2.5=h1a28f6b_1
+  - zlib=1.2.11=h90dfc92_1014
+  - pip:
+    - bcrypt==3.2.2
+    - cffi==1.15.0
+    - cryptography==37.0.2
+    - flake8==4.0.1
+    - future==0.18.2
+    - mccabe==0.6.1
+    - netmiko==4.1.0
+    - ntc-templates==3.0.0
+    - paramiko==2.10.4
+    - pycodestyle==2.8.0
+    - pycparser==2.21
+    - pyflakes==2.4.0
+    - pynacl==1.5.0
+    - pyserial==3.5
+    - pyyaml==6.0
+    - scp==0.14.4
+    - six==1.16.0
+    - tenacity==8.0.1
+    - textfsm==1.1.2
