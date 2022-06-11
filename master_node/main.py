@@ -1,5 +1,6 @@
 from master_node.configure_input import ConfigurationInput
 from master_node.controller import ControllerSSHServer
+from master_node.new_demon_node import InitializationDemonNode
 
 # host = input("Введите host: ")
 # username = input("Введите username: ")
@@ -13,6 +14,9 @@ is_one_start = True
 key_file = '/Users/antonidamedvedeva/.ssh/id_rsa'
 key_password = 'Tonya99'
 
+https_git = 'https://gitlab.com/service-analytics/discovery-failure.git'
+token = 'glpat-xSFrZUkeFwruDVrszr5B'
+
 config = ConfigurationInput(host=host,
                             username=username,
                             password=key_password,
@@ -25,6 +29,7 @@ controller = ControllerSSHServer(
     use_keys=True,
     key_file=key_file,
 )
-
-controller.command_send('ll')
+# InitializationDemonNode(controller).create_dir()
+InitializationDemonNode(controller).create_database(host, username)
+# controller.commands_send(['ll', 'ps'])
 controller.close()

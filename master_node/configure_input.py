@@ -1,5 +1,5 @@
 class ConfigurationInput:
-
+    """Валидация данных"""
     def __init__(self,
                  host: str,
                  username: str,

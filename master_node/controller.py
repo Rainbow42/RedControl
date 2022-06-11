@@ -4,7 +4,6 @@ from enum import Enum
 
 from netmiko import ConnectHandler
 
-
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'DEBUG')
 log_level = getattr(logging, LOG_LEVEL, logging.DEBUG)
 handler = logging.StreamHandler()
@@ -32,13 +31,28 @@ class ControllerSSHServer:
             username=username,
             password=password,
             **kwargs,
-            session_log="output.txt",
+            session_log=kwargs.get("dir_save_log", "output.txt"),
             # port=port,
             # secret=secret
         )
 
-    def command_send(self, command: str):
-        output = self.net_connect.send_command(command)
+    def command_send(self,
+                     command: str,
+                     strip_prompt: bool = True,
+                     strip_command: bool = True,
+                     expect_string=None,
+                     ):
+        mess_logg = f"COMMAND: {command}"
+        logger.info(mess_logg)
+        output = self.net_connect.send_command(command,
+                                               strip_prompt=strip_prompt,
+                                               strip_command=strip_command,
+                                               expect_string=expect_string)
+        mess_logg = f"OUTPUT COMMAND: {output}"
+        logger.info(mess_logg)
+
+    def commands_send(self, commands: list):
+        output = self.net_connect.send_config_set(commands)
         mess_logg = f"OUTPUT COMMAND: {output}"
         logger.info(mess_logg)
 
