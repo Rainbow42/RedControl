@@ -52,6 +52,7 @@ class ControllerSSHServer:
                                                **kwargs)
         mess_logg = f"OUTPUT COMMAND: {output}"
         logger.info(mess_logg)
+        return output
 
     def commands_send(self, commands: list):
         output = self.net_connect.send_config_set(commands)
