@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  db:
+  postgresql:
     build:
       context: .
       dockerfile: Dockerfile.postgresql

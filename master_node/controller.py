@@ -41,13 +41,15 @@ class ControllerSSHServer:
                      strip_prompt: bool = True,
                      strip_command: bool = True,
                      expect_string=None,
+                     **kwargs
                      ):
         mess_logg = f"COMMAND: {command}"
         logger.info(mess_logg)
         output = self.net_connect.send_command(command,
                                                strip_prompt=strip_prompt,
                                                strip_command=strip_command,
-                                               expect_string=expect_string)
+                                               expect_string=expect_string,
+                                               **kwargs)
         mess_logg = f"OUTPUT COMMAND: {output}"
         logger.info(mess_logg)
 

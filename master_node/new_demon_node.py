@@ -50,7 +50,7 @@ class CommandsDemonNode:
         """Синхронизация файлов с компьютера на котором запущен мастер
         для удаленного сервиса"""
         # rsync -avz ./docker/ deployer@192.168.3.15:/home/deployer
-        rsync = 'rsync -avz ' + file_out + ' ' \
+        rsync = 'rsync -rlpgoDvc ' + file_out + ' ' \
                 + username + '@' + ip + ':' + dir_to
         return rsync
 
@@ -72,7 +72,7 @@ class InitializationDemonNode:
             CommandsDemonNode.create_bin_dir(),
         ]
         self.controller.commands_send(init_dir)
-        self.controller.command_send('sudo chmod 777 redcontrol')
+        self.controller.command_send('chmod 777 redcontrol')
         mess_logg = "INIT WORK DIR"
         logger.info(mess_logg)
 
@@ -91,12 +91,16 @@ class InitializationDemonNode:
         2. Поднимем дб в контейнере
         """
         self.controller.command_send('cd')
-        self.controller.command_send('sudo chmod 777 redcontrol/bin')
+        self.controller.command_send('chmod 777 redcontrol/bin')
         self.controller.command_send(CommandsDemonNode.cd_dir_bin(),
                                      strip_prompt=False,
                                      strip_command=False,
                                      expect_string='~/redcontrol/bin')
-        self.controller.command_send('sudo mkdir docker')
+        self.controller.command_send('mkdir docker')
+        self.controller.command_send('mkdir docker/scripts')
+
+        self.controller.command_send('chmod 777 docker')
+        self.controller.command_send('chmod 777 docker/scripts')
 
         try:
             self.controller.command_send('docker ps -a')
@@ -105,12 +109,10 @@ class InitializationDemonNode:
         pwd = subprocess.check_output('pwd')
         docker = str(pwd.decode('utf-8')).rstrip() + '/docker/'
 
-        configs = [
-            'docker-compose.yml',
-            'Dockerfile.postgresql'
-        ]
-        self.controller.command_send('sudo chmod 777 docker')
-        for config in configs:
-            dir_config = docker + config
-            os.system(CommandsDemonNode.rsync_files(dir_config, ip, username, 'redcontrol/bin/docker/'))
+        os.system(CommandsDemonNode.rsync_files(docker, ip, username, 'redcontrol/bin/docker/'))
+        self.up_docker()
+
+    def up_docker(self):
+        self.controller.command_send('docker-compose -f docker/docker-compose.yml up', read_timeout=100)
+        self.controller.command_send('docker-compose -f docker/docker-compose.yml ps -a')
 
