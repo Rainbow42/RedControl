@@ -25,9 +25,24 @@ def upgrade() -> None:
                     sa.Column('created_at', sa.DateTime(), nullable=True),
                     sa.Column('updated_at', sa.DateTime(), nullable=True),
                     sa.PrimaryKeyConstraint('id'),
+                    sa.UniqueConstraint('id'))
+
+    op.create_table('conveyor',
+                    sa.Column('id', postgresql.UUID(as_uuid=True),
+                              nullable=False),
+                    sa.Column('name', sa.String(), nullable=False),
+                    sa.Column('version', sa.String(length=255), nullable=False),
+                    sa.Column('created_at', sa.DateTime(), nullable=True),
+                    sa.Column('updated_at', sa.DateTime(), nullable=True),
+                    sa.Column('extended_conveyor',
+                              postgresql.JSONB(astext_type=sa.Text()),
+                              server_default=sa.text("'{}'::jsonb"),
+                              nullable=False),
+                    sa.PrimaryKeyConstraint('id'),
                     sa.UniqueConstraint('id')
-                    )
+    )
 
 
 def downgrade() -> None:
     op.drop_table('configuration')
+    op.drop_table('conveyor')
