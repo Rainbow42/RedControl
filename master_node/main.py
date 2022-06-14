@@ -2,10 +2,6 @@ from master_node.configure_input import ConfigurationInput
 from master_node.controller import ControllerSSHServer
 from master_node.new_demon_node import InitializationDemonNode
 
-# host = input("Введите host: ")
-# username = input("Введите username: ")
-# password = input("Введите password: ")
-# is_one_start = bool(input("Установлен ли на сервере демон?: "))
 
 host = '192.168.3.15'
 username = 'deployer'
@@ -32,5 +28,5 @@ controller = ControllerSSHServer(
 
 # InitializationDemonNode(controller).create_dir()
 InitializationDemonNode(controller).create_database(host, username)
-# controller.commands_send(['ll', 'ps'])
+
 controller.close()
