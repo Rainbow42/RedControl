@@ -2,20 +2,16 @@ from master_node.configure_input import ConfigurationInput
 from master_node.controller import ControllerSSHServer
 from master_node.new_demon_node import InitializationDemonNode
 
-# host = input("Введите host: ")
-# username = input("Введите username: ")
-# password = input("Введите password: ")
-# is_one_start = bool(input("Установлен ли на сервере демон?: "))
 
 host = '192.168.3.15'
 username = 'deployer'
-password = 'Samsung'
+password = '****'
 is_one_start = True
 key_file = '/Users/antonidamedvedeva/.ssh/id_rsa'
-key_password = 'Tonya99'
+key_password = '****'
 
 https_git = 'https://gitlab.com/service-analytics/discovery-failure.git'
-token = 'glpat-xSFrZUkeFwruDVrszr5B'
+token = '****'
 
 config = ConfigurationInput(host=host,
                             username=username,
@@ -30,7 +26,7 @@ controller = ControllerSSHServer(
     key_file=key_file,
 )
 
-# InitializationDemonNode(controller).create_dir()
+InitializationDemonNode(controller).create_dir()
 InitializationDemonNode(controller).create_database(host, username)
-# controller.commands_send(['ll', 'ps'])
+InitializationDemonNode(controller).git_clone()
 controller.close()
