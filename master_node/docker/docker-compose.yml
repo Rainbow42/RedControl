@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  postgresql:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: redcontrol
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: redcontrol
+      PGDATA: /var/lib/postgresql/blogs
+#    volumes:
+#      - /var/lib/postgresql/data
+    restart: always
