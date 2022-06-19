@@ -108,7 +108,7 @@ class InitializationDemonNode:
             self.install_docker_compose()
         pwd = subprocess.check_output('pwd')
         docker = str(pwd.decode('utf-8')).rstrip() + '/docker/'
-
+        self.controller.command_send(CommandsDemonNode.rsync_files(docker, ip, username, 'redcontrol/bin/docker/'))
         os.system(CommandsDemonNode.rsync_files(docker, ip, username, 'redcontrol/bin/docker/'))
         self.up_docker()
 
@@ -232,3 +232,11 @@ class InitializationDemonNode:
             raise
 
         self.controller.command_send('docker-compose -f docker/docker-compose.yml start')
+
+    def git_clone(self):
+        self.controller.command_send('git clone https://github.com/Rainbow42/demon_node.git')
+        self.controller.command_send('cd demon_node')
+        self.controller.command_send('python main.py',
+                                     strip_prompt=False,
+                                     strip_command=False,
+                                     expect_string='~/redcontrol/bin/demon_node')
